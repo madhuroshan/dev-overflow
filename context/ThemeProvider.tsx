@@ -1,21 +1,38 @@
 "use client";
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+} from "react";
 
 interface ThemeContextType {
   mode: string;
   setMode: (mode: string) => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+const ThemeContext = createContext<
+  ThemeContextType | undefined
+>(undefined);
+export function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [mode, setMode] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const handleThemeChange = () => {
-    if (mode === "dark") {
-      setMode("light");
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)")
+          .matches)
+    ) {
+      setMode("dark");
       document.documentElement.classList.add("dark");
     } else {
-      setMode("dark");
+      setMode("light");
       document.documentElement.classList.remove("dark");
     }
   };
@@ -23,6 +40,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     handleThemeChange();
   }, [mode]);
+
+  console.log(mode);
 
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>
@@ -34,7 +53,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error(
+      "useTheme must be used within a ThemeProvider"
+    );
   }
   return context;
 }

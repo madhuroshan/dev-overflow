@@ -41,7 +41,6 @@ export default function RootLayout({
             },
           }}
         >
-          <h1 className="h1-bold">DevFlow</h1>
           <ThemeProvider>{children}</ThemeProvider>
         </ClerkProvider>
       </body>
