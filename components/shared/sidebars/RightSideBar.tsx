@@ -5,51 +5,51 @@ import RenderTags from "../RenderTags";
 const RightSideBar = () => {
   const popularTags = [
     {
-      _id: 1,
+      _id: "1",
       title: "React",
       numQuestions: 10,
     },
     {
-      _id: 2,
+      _id: "2",
       title: "Javascript",
       numQuestions: 17,
     },
     {
-      _id: 3,
+      _id: "3",
       title: "Typescript",
       numQuestions: 5,
     },
     {
-      _id: 4,
+      _id: "4",
       title: "Next.js",
       numQuestions: 3,
     },
     {
-      _id: 5,
+      _id: "5",
       title: "React",
       numQuestions: 10,
     },
   ];
   const topQuestions = [
     {
-      _id: 1,
+      _id: "1",
       title: "How to create a new project?",
     },
     {
-      _id: 2,
+      _id: "2",
       title: "How to create a new project?",
     },
     {
-      _id: 3,
+      _id: "3",
       title: "How to create a new project?",
     },
     {
-      _id: 4,
+      _id: "4",
       title:
         "How to create a new project? with something new",
     },
     {
-      _id: 5,
+      _id: "5",
       title: "React is the best framework?",
     },
   ];
