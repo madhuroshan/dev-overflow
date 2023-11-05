@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.action";
 
 export function ProfileForm() {}
 
@@ -38,12 +39,13 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(
+  async function onSubmit(
     values: z.infer<typeof QuestionsSchema>
   ) {
     setIsSubmitting(true);
     try {
       // make an API call to our database with all field values
+      await createQuestion({});
       // navigate to the home page
     } catch (err) {
     } finally {
@@ -134,6 +136,10 @@ const Question = () => {
                   onInit={(evt, editor) =>
                     // @ts-ignore
                     (editorRef.current = editor)
+                  }
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) =>
+                    field.onChange(content)
                   }
                   initialValue=""
                   init={{
