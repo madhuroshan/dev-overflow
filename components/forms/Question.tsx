@@ -19,12 +19,19 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { useRouter, usePathname } from "next/navigation";
 
 export function ProfileForm() {}
 
 const type: any = "create";
 
-const Question = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const Question = ({ mongoUserId }: Props) => {
+  const pathname = usePathname();
+  const router = useRouter();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -45,8 +52,15 @@ const Question = () => {
     setIsSubmitting(true);
     try {
       // make an API call to our database with all field values
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
+
       // navigate to the home page
+      router.push("/");
     } catch (err) {
     } finally {
       setIsSubmitting(false);
