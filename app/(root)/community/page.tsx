@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import React from "react";
 
-const Community = async () => {
+const Page = async () => {
   const results = await getAllUsers({});
   return (
     <>
@@ -50,4 +50,4 @@ const Community = async () => {
   );
 };
 
-export default Community;
+export default Page;
