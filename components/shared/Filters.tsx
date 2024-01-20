@@ -25,7 +25,9 @@ const Filters = ({
   containerClasses,
 }: HomePageFiltersProps) => {
   return (
-    <div className={`relative ${containerClasses}`}>
+    <div
+      className={`relative ${containerClasses} max-sm:w-full`}
+    >
       <Select>
         <SelectTrigger
           className={`${otherClasses} body-regular light-border

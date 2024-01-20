@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion } from "@/lib/actions/question.actions";
 import { useRouter, usePathname } from "next/navigation";
 
 export function ProfileForm() {}

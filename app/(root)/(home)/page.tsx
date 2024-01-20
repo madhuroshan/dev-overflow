@@ -5,7 +5,7 @@ import NoResults from "@/components/shared/NoResults";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filter";
-import { getQuestions } from "@/lib/actions/question.action";
+import { getQuestions } from "@/lib/actions/question.actions";
 import Link from "next/link";
 
 export default async function Home() {
