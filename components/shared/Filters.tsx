@@ -25,9 +25,7 @@ const Filters = ({
   containerClasses,
 }: HomePageFiltersProps) => {
   return (
-    <div
-      className={`relative ${containerClasses} max-sm:w-full`}
-    >
+    <div className={`relative ${containerClasses}`}>
       <Select>
         <SelectTrigger
           className={`${otherClasses} body-regular light-border
@@ -40,10 +38,7 @@ const Filters = ({
         <SelectContent>
           <SelectGroup>
             {filters.map((filter) => (
-              <SelectItem
-                value={filter.value}
-                key={filter.value}
-              >
+              <SelectItem value={filter.value} key={filter.value}>
                 {filter.name}
               </SelectItem>
             ))}

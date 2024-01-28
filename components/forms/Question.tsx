@@ -20,6 +20,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.actions";
 import { useRouter, usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
 export function ProfileForm() {}
 
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const Question = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
   const editorRef = useRef(null);
@@ -46,9 +48,7 @@ const Question = ({ mongoUserId }: Props) => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(
-    values: z.infer<typeof QuestionsSchema>
-  ) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
     try {
       // make an API call to our database with all field values
@@ -98,9 +98,7 @@ const Question = ({ mongoUserId }: Props) => {
   };
 
   const handleTagRemove = (tag: string, field: any) => {
-    const newTags = field.value.filter(
-      (t: string) => t !== tag
-    );
+    const newTags = field.value.filter((t: string) => t !== tag);
     form.setValue("tags", newTags);
   };
 
@@ -116,8 +114,7 @@ const Question = ({ mongoUserId }: Props) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title{" "}
-                <span className="text-primary-500">*</span>
+                Question Title <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
@@ -126,8 +123,8 @@ const Question = ({ mongoUserId }: Props) => {
                 />
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
-                Be specific and imagine you&apos;re asking a
-                question to another person
+                Be specific and imagine you&apos;re asking a question to another
+                person
               </FormDescription>
               <FormMessage className="text-red-500" />
             </FormItem>
@@ -144,18 +141,13 @@ const Question = ({ mongoUserId }: Props) => {
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Editor
-                  apiKey={
-                    process.env
-                      .NEXT_PUBLIC_TINY_EDITOR_API_KEY
-                  }
+                  apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) =>
                     // @ts-ignore
                     (editorRef.current = editor)
                   }
                   onBlur={field.onBlur}
-                  onEditorChange={(content) =>
-                    field.onChange(content)
-                  }
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
@@ -182,15 +174,15 @@ const Question = ({ mongoUserId }: Props) => {
                       "undo redo | " +
                       "codesample | bold italic forecolor | alignleft aligncenter | " +
                       "alignright alignjustify | bullist numlist ",
-                    content_style:
-                      "body { font-family:Inter; font-size:16px }",
+                    content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
-                Include all the information someone would
-                need to answer your question in minimum 200
-                characters
+                Include all the information someone would need to answer your
+                question in minimum 200 characters
               </FormDescription>
               <FormMessage className="text-red-500" />
             </FormItem>
@@ -202,17 +194,14 @@ const Question = ({ mongoUserId }: Props) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Tags{" "}
-                <span className="text-primary-500">*</span>
+                Tags <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <>
                   <Input
                     placeholder="Add Tags.."
                     className="no-focus background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
-                    onKeyDown={(e) =>
-                      handleKeyDown(e, field)
-                    }
+                    onKeyDown={(e) => handleKeyDown(e, field)}
                   />
                   {field.value.length > 0 && (
                     <div className="flex-start mt-2.5 gap-3">
@@ -240,9 +229,8 @@ const Question = ({ mongoUserId }: Props) => {
                 </>
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
-                Add up to 3 tags to describe what your
-                question is about.You need to press enter to
-                add a tag
+                Add up to 3 tags to describe what your question is about.You
+                need to press enter to add a tag
               </FormDescription>
               <FormMessage className="text-red-500" />
             </FormItem>
@@ -254,17 +242,9 @@ const Question = ({ mongoUserId }: Props) => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <>
-              {type === "edit"
-                ? "Editing..."
-                : "Posting..."}
-            </>
+            <>{type === "edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>
-              {type === "edit"
-                ? "Edit Question"
-                : "Ask Question"}
-            </>
+            <>{type === "edit" ? "Edit Question" : "Ask Question"}</>
           )}
         </Button>
       </form>
