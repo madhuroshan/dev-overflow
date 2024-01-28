@@ -1,7 +1,6 @@
 import { getQuestionById } from "@/lib/actions/question.actions";
 import Link from "next/link";
 import Image from "next/image";
-
 import React from "react";
 import Metric from "@/components/shared/Metric";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
@@ -12,8 +11,15 @@ import { auth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.actions";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Votes from "@/components/shared/Votes";
+import { SearchParamsProps } from "@/types";
 
-const Page = async ({ params, searchParams }) => {
+const Page = async ({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: SearchParamsProps;
+}) => {
   //   console.log(params);
   const result = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
