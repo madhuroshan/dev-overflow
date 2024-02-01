@@ -93,7 +93,7 @@ const Votes = ({
       userId: userId ? JSON.parse(userId) : undefined,
       questionId: JSON.parse(itemId),
     });
-  }, [userId, itemId, pathname, router]);
+  }, [userId, itemId, router, pathname]);
 
   return (
     <div className="flex gap-5">
