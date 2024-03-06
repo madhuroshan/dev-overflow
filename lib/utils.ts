@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { Number } from "mongoose";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -7,8 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const getTimeStamp = (createdAt: Date): string => {
   const now = new Date();
-  const diffInMilliseconds =
-    now.getTime() - createdAt.getTime();
+  const diffInMilliseconds = now.getTime() - createdAt.getTime();
 
   // Define time intervals in milliseconds
   const minute = 60 * 1000;
@@ -19,37 +19,21 @@ export const getTimeStamp = (createdAt: Date): string => {
   const year = day * 365; // Roughly 365 days in a year
 
   if (diffInMilliseconds < minute) {
-    return `${Math.round(
-      diffInMilliseconds / 1000
-    )} seconds ago`;
+    return `${Math.round(diffInMilliseconds / 1000)} seconds ago`;
   } else if (diffInMilliseconds < hour) {
-    return `${Math.round(
-      diffInMilliseconds / minute
-    )} minutes ago`;
+    return `${Math.round(diffInMilliseconds / minute)} minutes ago`;
   } else if (diffInMilliseconds < day) {
-    return `${Math.round(
-      diffInMilliseconds / hour
-    )} hours ago`;
+    return `${Math.round(diffInMilliseconds / hour)} hours ago`;
   } else if (diffInMilliseconds < week) {
-    return `${Math.round(
-      diffInMilliseconds / day
-    )} days ago`;
+    return `${Math.round(diffInMilliseconds / day)} days ago`;
   } else if (diffInMilliseconds < month) {
-    return `${Math.round(
-      diffInMilliseconds / week
-    )} weeks ago`;
+    return `${Math.round(diffInMilliseconds / week)} weeks ago`;
   } else if (diffInMilliseconds < year) {
-    const monthsAgo = Math.round(
-      diffInMilliseconds / month
-    );
-    return `${monthsAgo} ${
-      monthsAgo === 1 ? "month" : "months"
-    } ago`;
+    const monthsAgo = Math.round(diffInMilliseconds / month);
+    return `${monthsAgo} ${monthsAgo === 1 ? "month" : "months"} ago`;
   } else {
     const yearsAgo = Math.round(diffInMilliseconds / year);
-    return `${yearsAgo} ${
-      yearsAgo === 1 ? "year" : "years"
-    } ago`;
+    return `${yearsAgo} ${yearsAgo === 1 ? "year" : "years"} ago`;
   }
 };
 
@@ -61,4 +45,15 @@ export function formatNumber(num: number): string {
   } else {
     return num.toString();
   }
+}
+
+export function getJoinedDate(date: Date) {
+  // Array of month names
+  // Extract month and year from the Date object
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+
+  // Join month and year with a space in between
+  const joinDate = `${month} ${year}`;
+  return joinDate;
 }
