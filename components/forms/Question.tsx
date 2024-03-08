@@ -21,7 +21,6 @@ import Image from "next/image";
 import { createQuestion, editQuestion } from "@/lib/actions/question.actions";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
-import { type } from "os";
 import Tag from "@/database/tag.model";
 
 export function ProfileForm() {}
@@ -39,12 +38,13 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const parsedQuestionDetails = JSON.parse(questionDetails || "");
-  const groupedTags = parsedQuestionDetails.tags.map(
+  const parsedQuestionDetails = JSON.parse(questionDetails || "{}");
+
+  const groupedTags = parsedQuestionDetails.tags?.map(
     (tag: typeof Tag) => tag.name
   );
 
-  // 1. Define your form.
+  // 1. Define your form
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
