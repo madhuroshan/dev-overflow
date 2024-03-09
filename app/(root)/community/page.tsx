@@ -3,17 +3,20 @@ import Filters from "@/components/shared/Filters";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { UserFilters } from "@/constants/filter";
 import { getAllUsers } from "@/lib/actions/user.actions";
+import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
 import React from "react";
 
-const Page = async () => {
-  const results = await getAllUsers({});
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const results = await getAllUsers({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
+
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">
-        All Users
-      </h1>
+      <h1 className="h1-bold text-dark100_light900">All Users</h1>
 
       <div className="mt-11 flex items-center justify-between gap-5 max-sm:flex-col">
         <LocalSearchBar
@@ -37,10 +40,7 @@ const Page = async () => {
         ) : (
           <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
             <p>NO USERS YET </p>
-            <Link
-              href="/sign-up"
-              className="mt-1 font-bold text-accent-blue"
-            >
+            <Link href="/sign-up" className="mt-1 font-bold text-accent-blue">
               Join to be the first
             </Link>
           </div>

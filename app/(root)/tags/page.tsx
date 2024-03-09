@@ -1,21 +1,24 @@
 import Filters from "@/components/shared/Filters";
 import NoResults from "@/components/shared/NoResults";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import { UserFilters } from "@/constants/filter";
+import { TagFilters } from "@/constants/filter";
 import { getAllTags } from "@/lib/actions/tag.actions";
+import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
 import React from "react";
 
-const Page = async () => {
-  const results = await getAllTags({});
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const results = await getAllTags({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
+
   // BUG FIXING PHASE
   //   console.log(results.tags);
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">
-        All Tags
-      </h1>
+      <h1 className="h1-bold text-dark100_light900">All Tags</h1>
 
       <div className="mt-11 flex items-center justify-between gap-5 max-sm:flex-col">
         <LocalSearchBar
@@ -26,7 +29,7 @@ const Page = async () => {
           className="w-full flex-1"
         />
         <Filters
-          filters={UserFilters}
+          filters={TagFilters}
           otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
       </div>
