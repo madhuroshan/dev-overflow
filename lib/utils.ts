@@ -51,7 +51,7 @@ export function formatNumber(num: number): string {
 export function getJoinedDate(date: Date) {
   // Array of month names
   // Extract month and year from the Date object
-  const month = date.toLocaleString("default", { month: "long" });
+  const month = date?.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
 
   // Join month and year with a space in between
