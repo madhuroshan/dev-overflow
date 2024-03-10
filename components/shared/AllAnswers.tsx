@@ -8,7 +8,7 @@ import { getTimeStamp } from "@/lib/utils";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
 import Pagination from "./Pagination";
-import page from "@/app/(root)/(home)/page";
+
 interface Props {
   questionId: string;
   userId: string;
@@ -81,10 +81,7 @@ const AllAnswers = async ({
           );
         })}
       </div>
-      <Pagination
-        pageNumber={page ? page : 1}
-        isNext={result?.isNext || false}
-      />
+      <Pagination pageNumber={page || 1} isNext={result?.isNext || false} />
     </div>
   );
 };

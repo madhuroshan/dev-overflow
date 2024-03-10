@@ -100,7 +100,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
-    //create interaction for the question
+    // create interaction for the question
 
     await Interaction.create({
       user: author,
@@ -109,7 +109,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       tags: tagDocuments,
     });
 
-    //increase user's reputation by +5
+    // increase user's reputation by +5
 
     await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 

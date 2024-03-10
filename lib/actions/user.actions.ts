@@ -18,7 +18,6 @@ import Tag from "@/database/tag.model";
 import { FilterQuery } from "mongoose";
 import Answer from "@/database/answer.model";
 import { BadgeCriteriaType } from "@/types";
-import { type } from "os";
 import { assignBadges } from "../utils";
 
 export async function getUserById(params: GetUserByIdParams) {
@@ -97,7 +96,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
 
     const query: FilterQuery<typeof User> = {};
 
-    let skipAmount = (page - 1) * pageSize;
+    const skipAmount = (page - 1) * pageSize;
 
     if (searchQuery) {
       query.$or = [

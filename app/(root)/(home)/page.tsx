@@ -44,8 +44,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     });
   }
 
-  //Recommended Questions TODO:
-
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">

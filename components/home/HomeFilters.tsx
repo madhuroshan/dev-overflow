@@ -2,13 +2,12 @@
 import { HomePageFilters } from "@/constants/filter";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery } from "@/lib/utils";
 
 const HomeFilters = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname();
 
   const [active, setActive] = useState("");
   const handleTypeClick = (item: string) => {

@@ -1,7 +1,6 @@
 import { BADGE_CRITERIA } from "@/constants";
 import { BadgeCounts } from "@/types";
 import { type ClassValue, clsx } from "clsx";
-import { Number } from "mongoose";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
 

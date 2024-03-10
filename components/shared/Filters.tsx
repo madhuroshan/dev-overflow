@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/select";
 import { formUrlQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { undefined } from "zod";
 
 interface HomePageFiltersProps {
   // square brackets at the end means its an array of objects
