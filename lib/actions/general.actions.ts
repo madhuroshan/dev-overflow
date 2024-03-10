@@ -1,5 +1,4 @@
 "use server";
-
 import { SearchParams } from "./shares.types";
 import { connectToDatabase } from "../mongoose";
 import Answer from "@/database/answer.model";
