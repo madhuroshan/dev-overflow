@@ -52,7 +52,7 @@ export function getJoinedDate(date: Date) {
   // Array of month names
   // Extract month and year from the Date object
   const month = date?.toLocaleString("default", { month: "long" });
-  const year = date.getFullYear();
+  const year = date?.getFullYear();
 
   // Join month and year with a space in between
   const joinDate = `${month} ${year}`;
