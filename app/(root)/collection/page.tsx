@@ -1,23 +1,36 @@
 import QuestionCard from "@/components/cards/QuestionCard";
 import Filters from "@/components/shared/Filters";
 import NoResults from "@/components/shared/NoResults";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { QuestionFilters } from "@/constants/filter";
 import { getSavedQuestions } from "@/lib/actions/user.actions";
+import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
-export default async function Home() {
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Collection | Dev Overflow",
+};
+
+export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
   if (!userId) return null;
 
-  const result = await getSavedQuestions({ clerkId: userId });
+  const result = await getSavedQuestions({
+    clerkId: userId,
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
+  });
 
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
       <div className="mt-11 flex items-center justify-between gap-5 max-sm:flex-col">
         <LocalSearchBar
-          route="/"
+          route="/collection"
           iconPostion="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
@@ -55,6 +68,10 @@ export default async function Home() {
           />
         )}
       </div>
+      <Pagination
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result?.isNext ? result?.isNext : false}
+      />
     </>
   );
 }

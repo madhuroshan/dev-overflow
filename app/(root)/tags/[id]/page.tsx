@@ -2,9 +2,9 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/home/HomeFilters";
 
 import NoResults from "@/components/shared/NoResults";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
-import { IQuestion } from "@/database/question.model";
 
 import { getQuestionsByTagId } from "@/lib/actions/tag.actions";
 import { URLProps } from "@/types";
@@ -14,8 +14,8 @@ import React from "react";
 const page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
     tagId: params.id,
-    page: 1,
     searchQuery: searchParams.q,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   console.log(result);
@@ -31,7 +31,7 @@ const page = async ({ params, searchParams }: URLProps) => {
       </div>
       <div className="mt-11 w-full">
         <LocalSearchBar
-          route="/"
+          route={`/tags/${params.id}`}
           iconPostion="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
@@ -42,7 +42,7 @@ const page = async ({ params, searchParams }: URLProps) => {
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
         {result.questions.length > 0 ? (
-          result.questions.map((question: IQuestion) => (
+          result.questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -66,6 +66,10 @@ const page = async ({ params, searchParams }: URLProps) => {
           />
         )}
       </div>
+      <Pagination
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result?.isNext}
+      />
     </>
   );
 };

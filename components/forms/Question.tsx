@@ -38,9 +38,10 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const parsedQuestionDetails = JSON.parse(questionDetails || "{}");
+  const parsedQuestionDetails =
+    questionDetails && JSON.parse(questionDetails || "");
 
-  const groupedTags = parsedQuestionDetails.tags?.map(
+  const groupedTags = parsedQuestionDetails?.tags.map(
     (tag: typeof Tag) => tag.name
   );
 
@@ -48,8 +49,8 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      title: parsedQuestionDetails.title || "",
-      explanation: parsedQuestionDetails.content || "",
+      title: parsedQuestionDetails?.title || "",
+      explanation: parsedQuestionDetails?.content || "",
       tags: groupedTags || [],
     },
   });
@@ -165,7 +166,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                   }
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={parsedQuestionDetails.content || ""}
+                  initialValue={parsedQuestionDetails?.content || ""}
                   init={{
                     height: 350,
                     menubar: false,
@@ -225,10 +226,9 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                     <div className="flex-start mt-2.5 gap-3">
                       {field.value.map((tag: any) => (
                         <Badge
+                          // @eslint-disable-next-line
                           onClick={() => {
-                            type !== "Edit"
-                              ? handleTagRemove(tag, field)
-                              : () => {};
+                            handleTagRemove(tag, field);
                           }}
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500

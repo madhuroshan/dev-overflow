@@ -17,6 +17,7 @@ interface QuestionCardProps {
     _id: number;
     name: string;
     picture: string;
+    clerkId: string;
   };
   upvotes: string[];
   views: number;
@@ -63,7 +64,7 @@ const QuestionCard = ({
 
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <RenderTags key={tag._id} _id={tag._id} name={tag.name} />
+          <RenderTags key={tag.name} _id={tag._id} name={tag.name} />
         ))}
       </div>
 
@@ -76,27 +77,30 @@ const QuestionCard = ({
           href={`/profile/${author._id}`}
           textStyles="text-dark400_light700 body-medium"
         />
-        <Metric
-          imgUrl="/assets/icons/upvote.svg"
-          value={formatNumber(upvotes.length)}
-          title=" Votes"
-          alt="upvote"
-          textStyles="text-dark400_light800 small-medium"
-        />
-        <Metric
-          imgUrl="/assets/icons/eye.svg"
-          value={formatNumber(views)}
-          title=" Views"
-          alt="likes"
-          textStyles="text-dark400_light800 small-medium"
-        />
-        <Metric
-          imgUrl="/assets/icons/message.svg"
-          value={formatNumber(answers.length)}
-          title=" Answers"
-          alt="upvote"
-          textStyles="text-dark400_light800 small-medium"
-        />
+
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+          <Metric
+            imgUrl="/assets/icons/upvote.svg"
+            value={formatNumber(upvotes.length)}
+            title=" Votes"
+            alt="upvote"
+            textStyles="text-dark400_light800 small-medium"
+          />
+          <Metric
+            imgUrl="/assets/icons/eye.svg"
+            value={formatNumber(views)}
+            title=" Views"
+            alt="likes"
+            textStyles="text-dark400_light800 small-medium"
+          />
+          <Metric
+            imgUrl="/assets/icons/message.svg"
+            value={formatNumber(answers.length)}
+            title=" Answers"
+            alt="upvote"
+            textStyles="text-dark400_light800 small-medium"
+          />
+        </div>
       </div>
     </div>
   );

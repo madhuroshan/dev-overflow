@@ -1,5 +1,7 @@
+import { BADGE_CRITERIA } from "@/constants";
+import { BadgeCounts } from "@/types";
 import { type ClassValue, clsx } from "clsx";
-import { Number } from "mongoose";
+import qs from "query-string";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -50,10 +52,86 @@ export function formatNumber(num: number): string {
 export function getJoinedDate(date: Date) {
   // Array of month names
   // Extract month and year from the Date object
-  const month = date.toLocaleString("default", { month: "long" });
-  const year = date.getFullYear();
+  const month = date?.toLocaleString("default", { month: "long" });
+  const year = date?.getFullYear();
 
   // Join month and year with a space in between
   const joinDate = `${month} ${year}`;
   return joinDate;
 }
+
+interface UrlQueryParams {
+  params: string;
+  key: string;
+  value: string | null;
+}
+
+export const formUrlQuery = ({ params, key, value }: UrlQueryParams) => {
+  const currentUrl = qs.parse(params);
+
+  currentUrl[key] = value;
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    {
+      skipNull: true,
+    }
+  );
+};
+
+interface UrlRemoveQueryParams {
+  params: string;
+  keys: string[];
+}
+
+export const removeKeysFromQuery = ({ params, keys }: UrlRemoveQueryParams) => {
+  const currentUrl = qs.parse(params);
+
+  keys.forEach((key) => {
+    delete currentUrl[key];
+  });
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    {
+      skipNull: true,
+    }
+  );
+};
+
+interface BadgeParams {
+  criteria: {
+    type: keyof typeof BADGE_CRITERIA;
+    count: number;
+  }[];
+}
+
+export const assignBadges = (params: BadgeParams) => {
+  const badgeCounts: BadgeCounts = {
+    GOLD: 0,
+    SILVER: 0,
+    BRONZE: 0,
+  };
+
+  const { criteria } = params;
+
+  criteria.forEach((item) => {
+    const { type, count } = item;
+
+    const badgeLevels: any = BADGE_CRITERIA[type];
+
+    Object.keys(badgeLevels).forEach((level: any) => {
+      if (count >= badgeLevels[level]) {
+        badgeCounts[level as keyof BadgeCounts] += 1;
+      }
+    });
+  });
+
+  return badgeCounts;
+};
