@@ -8,6 +8,12 @@ import { getSavedQuestions } from "@/lib/actions/user.actions";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Collection | Dev Overflow",
+};
+
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
   if (!userId) return null;

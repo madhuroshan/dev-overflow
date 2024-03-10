@@ -17,7 +17,7 @@ const Theme = () => {
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
       <MenubarMenu>
-        <MenubarTrigger className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200">
+        <MenubarTrigger className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200 cursor-pointer">
           {mode === "light" ? (
             <Image
               src="/assets/icons/sun.svg"
@@ -36,7 +36,7 @@ const Theme = () => {
             />
           )}
         </MenubarTrigger>
-        <MenubarContent className="absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2 dark:border-dark-400 dark:bg-dark-300">
+        <MenubarContent className="absolute bg-light-900 right-[-3rem] mt-3 min-w-[120px] rounded border py-2 dark:border-dark-400 dark:bg-dark-300">
           {themes.map((theme) => (
             <MenubarItem
               key={theme.label}
@@ -48,16 +48,14 @@ const Theme = () => {
                   localStorage.removeItem("theme");
                 }
               }}
-              className="flex items-center gap-4 px-2.5 py-2 dark:focus:bg-dark-400"
+              className="flex items-center gap-4 px-2.5 py-2 cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400"
             >
               <Image
                 src={theme.icon}
                 alt={theme.value}
                 width={16}
                 height={16}
-                className={`${
-                  mode === theme.value && "active-theme"
-                }`}
+                className={`${mode === theme.value && "active-theme"}`}
               />
               <span
                 className={`body-semibold text-light-500 ${
