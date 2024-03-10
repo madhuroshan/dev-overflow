@@ -81,6 +81,8 @@ const Page = async ({ params, searchParams }: URLProps) => {
       <Stats
         totalQuestions={userInfo?.totalQuestions || 0}
         totalAnswers={userInfo?.totalAnswers || 0}
+        badges={userInfo?.badgeCounts || { GOLD: 0, SILVER: 0, BRONZE: 0 }}
+        reputation={userInfo?.reputation || 0}
       />
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
