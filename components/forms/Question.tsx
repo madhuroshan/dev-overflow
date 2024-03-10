@@ -228,9 +228,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                         <Badge
                           // @eslint-disable-next-line
                           onClick={() => {
-                            type !== "Edit"
-                              ? handleTagRemove(tag, field)
-                              : () => {};
+                            handleTagRemove(tag, field);
                           }}
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500
