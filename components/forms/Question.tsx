@@ -226,7 +226,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                     <div className="flex-start mt-2.5 gap-3">
                       {field.value.map((tag: any) => (
                         <Badge
-                          //@eslint-disable-next-line
+                          // @eslint-disable-next-line
                           onClick={() => {
                             type !== "Edit"
                               ? handleTagRemove(tag, field)
